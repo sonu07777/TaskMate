@@ -111,11 +111,11 @@ const logout = (req, res, next) => {
       maxAge: 0,
       httpOnly: true,
     });
-    res.cookie("taskToken", null, {
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 0,
-      httpOnly: true,
-    });
+    // res.cookie("taskToken", null, {
+    //   secure: process.env.NODE_ENV === "production" ? true : false,
+    //   maxAge: 0,
+    //   httpOnly: true,
+    // });
     res.status(200).json({
       success: true,
       message: "User logged out successfully",

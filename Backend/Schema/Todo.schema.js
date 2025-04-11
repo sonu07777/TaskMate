@@ -15,7 +15,8 @@ const todo_schema = new Schema({
         {
           todoData: { type: String },
           finished: {
-            type: Boolean, default: false
+            type: Boolean,
+            default: false,
           },
         },
       ],
@@ -29,21 +30,21 @@ const todo_schema = new Schema({
   },
 });
 
-todo_schema.methods ={
-  generateTaskJWTToken: async function () {
-      return await jwt.sign(
-        {
-          taskListId: this._id,  // ✅ Task List Document ID
-          userId: this.user,  // ✅ User ID (to verify ownership)
-          titleId: this.title?._id || null, // ✅ Title ID (optional)
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: process.env.JWT_EXPIRY,
-        }
-      );
-    },
-}
+// todo_schema.methods ={
+//   generateTaskJWTToken: async function () {
+//       return await jwt.sign(
+//         {
+//           taskListId: this._id,  // ✅ Task List Document ID
+//           userId: this.user,  // ✅ User ID (to verify ownership)
+//           titleId: this.title?._id || null, // ✅ Title ID (optional)
+//         },
+//         process.env.JWT_SECRET,
+//         {
+//           expiresIn: process.env.JWT_EXPIRY,
+//         }
+//       );
+//     },
+// }
 
 const Task = mongoose.model("Task", todo_schema);
 export default Task;

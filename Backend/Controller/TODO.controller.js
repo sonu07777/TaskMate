@@ -1,12 +1,12 @@
 import Task from "../Schema/Todo.schema.js";
 // import user from "../Schema/User.schema.js";
 
-const cookieOption = {
-  maxAge: 7 * 24 * 60 * 60 * 1000, // for 7days login
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production" ? true : false,
-  sameSite: "Lax"
-};
+// const cookieOption = {
+//   maxAge: 7 * 24 * 60 * 60 * 1000, // for 7days login
+//   httpOnly: true,
+//   secure: process.env.NODE_ENV === "production" ? true : false,
+//   sameSite: "Lax"
+// };
 
 const addTodo = async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ const addTodo = async (req, res, next) => {
 
     await newTaskList.save();
     const token = await newTaskList.generateTaskJWTToken();
-    res.cookie("taskToken", token, cookieOption);
+    // res.cookie("taskToken", token, cookieOption);
     res.status(201).json({
       success: true,
       message: "Task list created successfully",
