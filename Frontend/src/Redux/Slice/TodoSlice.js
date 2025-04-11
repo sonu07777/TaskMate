@@ -1,0 +1,283 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
+import axiosInstance from "../../AxiosInstance/authAxio.js";
+
+const initialState = {
+  allTodo: [],
+  allTask:
+    // localStorage.getItem("allTask") !== undefined
+    //   ? JSON.parse(localStorage.getItem("allTask"))
+    //   : {}, 
+    JSON.parse(localStorage.getItem("allTask")) || [],
+};
+
+export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
+  try {
+    const res = axiosInstance.get("/api/v1/todo/getAllTodo");
+    // console.log(res);
+
+    toast.promise(res, {
+      loading: "Loading",
+      success: (data) => {
+        return data?.data?.message;
+      },
+      error: "failed to create account",
+    });
+    return (await res).data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+  }
+});
+export const addingTodo = createAsyncThunk("/addTodo", async (data) => {
+  try {
+    console.log(data);
+
+    const res = axiosInstance.post("/api/v1/todo/addTodo", data);
+    // console.log(res);
+    toast.promise(res, {
+      loading: "Loading...",
+      success: (data) => {
+        return data?.data?.message;
+      },
+      error: "failed to add",
+    });
+    return (await res).data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+  }
+});
+export const fetchTask = createAsyncThunk("/fetchTodo", async (data) => {
+  try {
+    const res = axiosInstance.get(`/api/v1/todo/fetchTask/${data}`);
+    toast.promise(res, {
+      loading: "Loading",
+      success: (data) => {
+        return data?.data?.message;
+      },
+      error: "failed to get all course",
+    });
+    return (await res).data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+  }
+});
+export const addingTask = createAsyncThunk(
+  "/addTasks",
+  async ([taskListId, newTask]) => {
+    try {
+      // console.log(taskListId);
+      // console.log(newTask);
+
+      const res = axiosInstance.post(
+        `/api/v1/todo/addTask/${taskListId}`,
+        newTask
+      );
+      // console.log(data[0]+ "   " + {...data[1]});
+
+      // console.log(res);
+
+      toast.promise(res, {
+        loading: "Adding Task....",
+        success: (data) => {
+          return data?.data?.message;
+        },
+        error: "failed to get all course",
+      });
+      return (await res).data;
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+export const editingTask = createAsyncThunk(
+  "/editTask",
+  async ([taskListId, newTask]) => {
+    try {
+      const response = axiosInstance.put(
+        `/api/v1/todo/editTask/${taskListId}`,
+        newTask
+      );
+      // console.log(newTask);
+      // console.log(response);
+      toast.promise(response, {
+        loading: "wait changing the task..",
+        success: (data) => {
+          return data?.data?.message;
+        },
+        error: "we are unable change the task due to some problem",
+      });
+      return (await response).data;
+    } catch (error) {
+      // console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+export const editingTodo = createAsyncThunk("/editingTodo", async (data) => {
+  try {
+    const response = axiosInstance.post(`/api/v1/todo/editTodo`, data);
+    // console.log(newTask);
+    console.log(response);
+    toast.promise(response, {
+      loading: "wait changing the Todo..",
+      success: (data) => {
+        return data?.data?.message;
+      },
+      error: "we are unable change the task due to some problem",
+    });
+    return (await response).data;
+  } catch (error) {
+    // console.log(error);
+    toast.error(error?.response?.data?.message);
+  }
+});
+export const todoDelete = createAsyncThunk(
+  "/deleteingTodo",
+  async (taskListId) => {
+    try {
+      console.log(taskListId);
+      const response = axiosInstance.delete(
+        `/api/v1/todo/deleteTodo/${taskListId}`
+      );
+      console.log(response);
+      toast.promise(response, {
+        loading: "wait delete on the process..",
+        success: (data) => {
+          return data?.data?.message;
+        },
+        error: "we are unable delete the todo due to some problem",
+      });
+      return (await response).data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+export const taskDelete = createAsyncThunk(
+  "/deleteTask",
+  async ([taskListId, taskId]) => {
+    try {
+      console.log(taskListId, taskId);
+      const response = axiosInstance.delete(
+        `/api/v1/todo/deleteTask/${taskListId}/${taskId}`
+      );
+      console.log(response);
+      toast.promise(response, {
+        loading: "wait delete on the process..",
+        success: (data) => {
+          return data?.data?.message;
+        },
+        error: "we are unable delete the todo due to some problem",
+      });
+      return (await response).data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+
+export const isFinished = createAsyncThunk(
+  "/editFinished",
+  async ([taskListId, taskId, finished]) => {
+    try {
+      console.log(taskListId, taskId);
+      const response = axiosInstance.put(
+        `/api/v1/todo/updateTaskStatus/${taskListId}/${taskId}`,
+        { finished }
+      );
+      console.log(response);
+      toast.promise(response, {
+        loading:"Task is Changing...",
+        success: (data) => {
+          return data?.data?.message;
+        },
+        error: "we are unable delete the todo due to some problem",
+      });
+      return (await response).data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+
+export const selectAllTask = createAsyncThunk(
+  "/allSelect",
+  async (taskListId) => {
+    try {
+      console.log(taskListId);
+      const response = axiosInstance.patch(
+        `/api/v1/todo/selectAll_Task/${taskListId}`
+      );
+      console.log(response);
+      toast.promise(response, {
+        loading:"selecting all task..",
+        success: (data) => {
+          return data?.data?.message;
+        },
+        error: "we are unable to do all select due to some problem",
+      });
+      return (await response).data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+
+export const unselectAllTask = createAsyncThunk(
+  "/allUnSelect",
+  async (taskListId) => {
+    try {
+      console.log(taskListId);
+      const response = axiosInstance.patch(
+        `/api/v1/todo/unselectAll_Task/${taskListId}`
+      );
+      console.log(response);
+      toast.promise(response, {
+        loading:"unCheck all...",
+        success: (data) => {
+          return data?.data?.message;
+        },
+        error: "we are unable to do all select due to some problem",
+      });
+      return (await response).data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+
+const authSlice = createSlice({
+  name: "Todo",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTodo.fulfilled, (state, action) => {
+        // console.log(action.payload);
+        localStorage.setItem(
+          "allTodo",
+          JSON.stringify(action?.payload?.data?.title?.name)
+        );
+        if (action.payload) {
+          state.allTodo = [...action.payload.data];
+        }
+      })
+      .addCase(fetchTask.fulfilled, (state, action) => {
+        console.log(action.payload);
+        localStorage.setItem(
+          "allTask",
+          JSON.stringify(action?.payload?.data?.title?.tasks)
+        );
+        if (action.payload) {
+          state.allTask = action.payload?.data?.title?.tasks;
+        }
+      });
+  },
+});
+
+export default authSlice.reducer;
