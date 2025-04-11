@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../AxiosInstance/authAxio.js";
 
 const initialState = {
-  allTodo: [],
+  allTodo: JSON.parse(localStorage.getItem("allTodo")) || [],
   allTask:
     // localStorage.getItem("allTask") !== undefined
     //   ? JSON.parse(localStorage.getItem("allTask"))
@@ -283,14 +283,21 @@ export const unselectAllTask = createAsyncThunk(
 const authSlice = createSlice({
   name: "Todo",
   initialState,
-  reducers: {},
+  reducers: {
+    resetTodoState: (state) => {
+      state.allTodo = [];
+      state.allTask = [];
+      localStorage.removeItem("allTodo");
+      localStorage.removeItem("allTask");
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodo.fulfilled, (state, action) => {
-        // console.log(action.payload);
+        console.log(action.payload);
         localStorage.setItem(
           "allTodo",
-          JSON.stringify(action?.payload?.data?.title?.name)
+          JSON.stringify(action?.payload?.data)
         );
         if (action.payload) {
           state.allTodo = [...action.payload.data];
@@ -310,3 +317,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { resetTodoState } = authSlice.actions;

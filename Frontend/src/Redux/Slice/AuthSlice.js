@@ -32,7 +32,7 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
 export const login = createAsyncThunk("/auth/login", async (data) => {
   try {
     const res = axiosInstance.post("/api/v1/user/login", data);
-    console.log(res);
+    // console.log(res);
 
     toast.promise(res, {
       loading: "Wait! authentication in progress...",
@@ -213,6 +213,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
+        console.log(state);
         localStorage.setItem("data", JSON.stringify(action?.payload?.User));
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("role", action?.payload?.User?.role);
@@ -221,12 +222,17 @@ const authSlice = createSlice({
         state.role = action?.payload?.User?.role;
       })
       .addCase(logout.fulfilled, (state) => {
+        console.log(state);
         localStorage.clear();
         state.data = {};
         state.isLoggedIn = false;
         state.role = "";
+        state.allTodo = [],
+        state.allTask = []
+
       })
       .addCase(getUserData.fulfilled, (state, action) => {
+        console.log(state);
         if (!action?.payload?.User) return;
         localStorage.setItem("data", JSON.stringify(action?.payload?.User));
         localStorage.setItem("isLoggedIn", true);

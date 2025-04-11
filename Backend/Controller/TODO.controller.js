@@ -61,10 +61,24 @@ const fetchTodo = async (req, res, next) => {
   try {
     // ✅ Fetch only the 'title.name' field for all task lists belonging to the user
     const taskLists = await Task.find({ user: req.user.id });
-    console.log(taskLists);
+    // console.log(taskLists);
 
-    if (!taskLists || taskLists.length === 0) {
-      return res.status(404).json({success:false, message: "No titles found" });
+    // if (!taskLists || taskLists.length === 0) {
+    //   return res.status(404).json({success:false, message: "No titles found" });
+    // }
+    if (!taskLists) {
+      return res.status(404).json({
+        success: false,
+        message: "No task list found for the user.",
+      });
+    }
+    
+    if (Array.isArray(taskLists) && taskLists.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "Task list is empty.",
+        data: [],
+      });
     }
 
     // ✅ Extract only title names
