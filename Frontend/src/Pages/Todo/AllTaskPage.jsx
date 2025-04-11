@@ -119,7 +119,6 @@ function AllTaskPage() {
     }
   }
 
- 
   async function selectAllTasks() {
     const response = await dispatch(selectAllTask(state._id));
     if (response?.payload?.success) {
@@ -161,11 +160,11 @@ function AllTaskPage() {
 
   return (
     <HomeLayout>
-      <div className="max-w-[95vw] sm:max-w-4xl mx-auto mt-10 p-8 bg-gradient-to-br from-white via-yellow-50 to-white shadow-2xl rounded-3xl border border-yellow-100">
+      <div className="max-w-[95vw] sm:max-w-4xl mx-auto  p-8 bg-gradient-to-br from-white via-yellow-50 to-white shadow-2xl rounded-3xl border border-yellow-100">
         {/* Title */}
         <span className="text-yellow-500">Tasks</span>
         <h2 className="text-3xl font-bold text-gray-800 relative pb-3 mb-8 after:content-[''] after:w-24 after:h-1 after:bg-yellow-400 after:absolute after:bottom-0 after:left-0 after:rounded-full">
-          {name} 
+          {name}
         </h2>
 
         {/* Input + Add Button + Select All */}
@@ -201,7 +200,7 @@ function AllTaskPage() {
         </div>
 
         {/* Task List */}
-        <div className="max-h-[360px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-yellow-100">
+        <div className="max-h-[280px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-yellow-100">
           <ul className="space-y-4">
             {tasks.map((task) => (
               <TaskList
@@ -327,32 +326,31 @@ export default AllTaskPage;
           )} */
 }
 
-  // async function unselectAllTasks() {
-  //   setAllCheck(true);
-  //   const response = await dispatch(unselectAllTask(state._id));
-  //   console.log(response?.payload?.success);
+// async function unselectAllTasks() {
+//   setAllCheck(true);
+//   const response = await dispatch(unselectAllTask(state._id));
+//   console.log(response?.payload?.success);
 
-  //   if (response?.payload?.success) {
-  //     toast.success("All tasks unselected");
-  //     await loadAllTask();
-  //   } else {
-  //     toast.error("Failed to unselect tasks");
-  //   }
-  // }
+//   if (response?.payload?.success) {
+//     toast.success("All tasks unselected");
+//     await loadAllTask();
+//   } else {
+//     toast.error("Failed to unselect tasks");
+//   }
+// }
 
+// ---------------------
+// async function selectAllTasks() {
+//   setAllCheck(false);
+//   const response = await dispatch(selectAllTask(state._id));
+//   console.log(response?.payload?.success);
 
-  // ---------------------
-   // async function selectAllTasks() {
-  //   setAllCheck(false);
-  //   const response = await dispatch(selectAllTask(state._id));
-  //   console.log(response?.payload?.success);
+//   if (response?.payload?.success) {
+//     toast.success("Task updated successfully");
 
-  //   if (response?.payload?.success) {
-  //     toast.success("Task updated successfully");
-
-  //     // ✅ Fetch updated tasks from Redux and update state
-  //     await loadAllTask();
-  //   } else {
-  //     toast.error("Failed to update task");
-  //   }
-  // }
+//     // ✅ Fetch updated tasks from Redux and update state
+//     await loadAllTask();
+//   } else {
+//     toast.error("Failed to update task");
+//   }
+// }

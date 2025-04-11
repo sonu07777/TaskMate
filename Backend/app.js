@@ -10,10 +10,11 @@ import router from "./Router/TODO.router.js";
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
+app.use(express.urlencoded({ extended: true }));
+// console.log("CORS allowed origin:", process.env.FRONTEND_URL);
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
@@ -22,7 +23,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/contact", contactRouter);
-app.use("/api/v1/todo",router)
+app.use("/api/v1/todo", router);
 
 app.use("*", (req, res) => {
   res.send("oops! 404 not found");

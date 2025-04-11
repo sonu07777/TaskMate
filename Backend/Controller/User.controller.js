@@ -11,6 +11,7 @@ const cookieOption = {
   maxAge: 7 * 24 * 60 * 60 * 1000, // for 7days login
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production' ? true : false,
+  sameSite: "Lax",
 };
 
 const register = async (req, res, next) => {

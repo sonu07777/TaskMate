@@ -1,21 +1,70 @@
-// zod.todo.schema.ts
 import { z } from "zod";
 
-// Schema to validate individual tasks inside the title
-const taskItemSchema = z.object({
-  id: z.number().optional(), // assuming this is auto-generated or optional
-  todoData: z.string().min(1, "Task content is required"),
-  finished: z.boolean().optional(), // defaults handled in Mongoose
+// Individual Task item inside the 'tasks' array
+// const taskItemSchema = z.object({
+//   todoData: z.string().min(1, "Task text is required"),
+//   finished: z.boolean().optional().default(false),
+// });
+
+// // Title schema
+// const titleSchema = z.object({
+//   name: z.string().min(1, "Title name is required"),
+//   tasks: z.array(taskItemSchema).optional().default([]),
+// });
+
+// // Main Task schema (Zod)
+// export const taskZodSchema = z.object({
+//   user: z.string().min(1, "User ID is required").regex(/^[a-f\d]{24}$/i, "Invalid MongoDB ObjectId"),
+//   title: titleSchema,
+//   createdAt: z.date().optional(), // Optional because Mongoose sets it automatically
+// });
+
+export const createTodoSchema = z.object({
+  name: z.string().min(1, "Task list name is required"),
 });
 
-// Schema for the "title" field (which has name and tasks array)
-const titleSchema = z.object({
-  name: z.string().min(1, "Title name is required"),
-  tasks: z.array(taskItemSchema).optional(), // tasks can be added later
+export const addTaskItemSchema = z.object({
+  todoData: z.string().min(1, "Task description is required"),
+  finished: z.boolean().optional().default(false),
 });
 
-// Final schema for the Todo document
-export const todoZodSchema = z.object({
-  user: z.string().min(1, "User ID is required").regex(/^[0-9a-fA-F]{24}$/, "Invalid MongoDB ObjectId"),
-  title: titleSchema,
+
+export const editTodoTitleSchema = z.object({
+  taskListId: z
+    .string()
+    .min(1, "Task List ID is required")
+    .regex(/^[a-f\d]{24}$/i, "Invalid MongoDB ObjectId"),
+  newName: z
+    .string()
+    .min(1, "New title name is required")
+    .max(100, "Title name is too long"),
 });
+
+export const editTaskParamsSchema = z.object({
+  taskListId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid Task List ID"),
+});
+
+export const editTaskBodySchema = z.object({
+  _id: z.string().regex(/^[a-f\d]{24}$/i, "Invalid Task ID"),
+  todoData: z.string().optional(),
+  finished: z.boolean().optional(),
+});
+
+
+export const updateTaskStatusParamsSchema = z.object({
+  taskListId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid Task List ID"),
+  taskId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid Task ID"),
+});
+
+export const updateTaskStatusBodySchema = z.object({
+  finished: z.boolean({
+    required_error: "Finished field is required",
+    invalid_type_error: "Finished must be a boolean",
+  }),
+});
+
+export const taskListIdParamSchema = z.object({
+  taskListId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid Task List ID"),
+});
+
+
