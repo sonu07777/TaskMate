@@ -17,7 +17,7 @@ export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
     console.log(res);
 
     toast.promise(res, {
-      loading: "Loading",
+      loading: "Loading..",
       success: (data) => {
         return data?.data?.message;
       },

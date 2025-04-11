@@ -69,10 +69,10 @@ const fetchTodo = async (req, res, next) => {
   try {
     // ✅ Fetch only the 'title.name' field for all task lists belonging to the user
     const taskLists = await Task.find({ user: req.user.id });
-    // console.log(taskLists);
+    console.log(taskLists);
 
     if (!taskLists || taskLists.length === 0) {
-      return res.status(404).json({ message: "No titles found" });
+      return res.status(404).json({success:false, message: "No titles found" });
     }
 
     // ✅ Extract only title names
@@ -81,12 +81,12 @@ const fetchTodo = async (req, res, next) => {
     // res.cookie("taskToken", token, cookieOption);
     return res
       .status(200)
-      .json({ message: "Titles fetched successfully", data: taskLists });
+      .json({success:true, message: "Titles fetched successfully", data: taskLists });
   } catch (error) {
     console.error("Error fetching titles:", error.message);
     res
       .status(500)
-      .json({ message: "Error fetching titles", error: error.message });
+      .json({success:false, message: "Error fetching titles", error: error.message });
   }
 };
 const fetchTask = async (req, res, next) => {
