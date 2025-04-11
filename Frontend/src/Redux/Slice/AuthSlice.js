@@ -5,10 +5,13 @@ import axiosInstance from "../../AxiosInstance/authAxio.js";
 const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn") || false,
   role: localStorage.getItem("role") || "",
-  data:
-    localStorage.getItem("data") !== undefined
-      ? JSON.parse(localStorage.getItem("data"))
-      : {},
+  // data:
+  //   localStorage.getItem("data") !== undefined
+  //     ? JSON.parse(localStorage.getItem("data"))
+  //     : {},
+  data: localStorage.getItem("data")
+    ? JSON.parse(localStorage.getItem("data"))
+    : {},
 };
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
   try {
@@ -18,7 +21,7 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
       success: (data) => {
         return data?.data?.message;
       },
-      error: "failed to create account",
+      error: "failed to load todo",
     });
     return (await res).data;
   } catch (error) {

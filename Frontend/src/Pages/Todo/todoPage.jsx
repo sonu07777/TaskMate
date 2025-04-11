@@ -85,42 +85,7 @@ export default function TodoPage() {
 
   return (
     <HomeLayout>
-      {/* <div className=" container mx-auto max-w-[100vw] mt-10 p-6 bg-white shadow-lg rounded-lg">
-        <h1 className="text-2xl font-bold mb-4">Todo List</h1>
-        
-        <div className="flex gap-2 max-w-12 mb-4">
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Enter a new todo"
-            value={newTodo.name}
-            onChange={handleUserInput}
-            // onChange={(e) => handleUserInput(e.target.name, e.target.value)}
-            className="flex-1 p-2 border rounded-lg"
-          />
-          <button
-            // type="submit"
-            onClick={addTodo}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-            Add
-          </button>
-        </div>
-      
-        <div className="max-w-full flex flex-wrap justify-between gap-5  items-center ">
-          {allTodo.map((el) => {
-            // console.log(el);
-            return (
-              <TodoList
-                key={el._id}
-                data={el}
-                updateTodo={updateTodo}
-                deleteTodo={deleteTodo}
-              />
-            );
-          })}
-        </div>
-      </div> */}
+     
 
 <div className="container mx-auto max-w-[95vw] mt-10 p-6 bg-white shadow-2xl rounded-2xl">
   <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">📝 Todo List</h1>
