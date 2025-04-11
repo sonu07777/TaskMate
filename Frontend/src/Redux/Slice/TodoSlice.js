@@ -13,7 +13,7 @@ const initialState = {
 
 export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
   try {
-    const res =await axiosInstance.get("/api/v1/todo/getAllTodo");
+    const res = axiosInstance.get("/api/v1/todo/getAllTodo",{withCredentials: true});
     console.log(res);
 
     toast.promise(res, {
