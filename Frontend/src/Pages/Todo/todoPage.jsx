@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
+// import { FaTrash } from "react-icons/fa";
 import HomeLayout from "../../../Layout/HomeLayout.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -85,42 +85,41 @@ export default function TodoPage() {
 
   return (
     <HomeLayout>
-     
+      <div className="container mx-auto max-w-[95vw] mt-10 p-6 bg-white shadow-2xl rounded-2xl">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          📝 Todo List
+        </h1>
 
-<div className="container mx-auto max-w-[95vw] mt-10 p-6 bg-white shadow-2xl rounded-2xl">
-  <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">📝 Todo List</h1>
+        {/* Input and Add Button */}
+        <div className="flex flex-col sm:flex-row gap-3 mb-6">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter a new todo"
+            value={newTodo.name}
+            onChange={handleUserInput}
+            className="flex-1 p-3 border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <button
+            onClick={addTodo}
+            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition duration-200">
+            ➕ Add
+          </button>
+        </div>
 
-  {/* Input and Add Button */}
-  <div className="flex flex-col sm:flex-row gap-3 mb-6">
-    <input
-      type="text"
-      name="name"
-      id="name"
-      placeholder="Enter a new todo"
-      value={newTodo.name}
-      onChange={handleUserInput}
-      className="flex-1 p-3 border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
-    <button
-      onClick={addTodo}
-      className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition duration-200">
-      ➕ Add
-    </button>
-  </div>
-
-  {/* Todo List Grid */}
-  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {allTodo.map((el) => (
-      <TodoList
-        key={el._id}
-        data={el}
-        updateTodo={updateTodo}
-        deleteTodo={deleteTodo}
-      />
-    ))}
-  </div>
-</div>
-
+        {/* Todo List Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {allTodo.map((el) => (
+            <TodoList
+              key={el._id}
+              data={el}
+              updateTodo={updateTodo}
+              deleteTodo={deleteTodo}
+            />
+          ))}
+        </div>
+      </div>
     </HomeLayout>
   );
 }

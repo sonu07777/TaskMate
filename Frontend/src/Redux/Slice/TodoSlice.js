@@ -21,7 +21,7 @@ export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
       success: (data) => {
         return data?.data?.message;
       },
-      error: "failed to create account",
+      error: "failed to load todo...",
     });
     return (await res).data;
   } catch (error) {
