@@ -13,10 +13,10 @@ function TodoList({ data, updateTodo, deleteTodo }) {
   //  const deleteTodo = (id) => {
   //     setTodos(todos.filter((todo) => todo.id !== id));
   //   };
-  const dateObj = new Date(data.createdAt);
-  const date = dateObj.toLocaleDateString(); // e.g., "3/30/2025"
-  const time = dateObj.toLocaleTimeString(); // e.g., "6:11:06 AM"
-  console.log({ ...data });
+  // const dateObj = new Date(data.createdAt);
+  // const date = dateObj.toLocaleDateString(); // e.g., "3/30/2025"
+  // const time = dateObj.toLocaleTimeString(); // e.g., "6:11:06 AM"
+  // console.log({ ...data });
   const handleSave = () => {
     updateTodo(alldata); // Pass updated task data to parent component
     setEditing(false); // Exit editing mode
@@ -27,102 +27,6 @@ function TodoList({ data, updateTodo, deleteTodo }) {
   };
 
   return (
-    // <div>
-    //   <ul className="space-y-2 flex items-center justify-first gap-10 ">
-    //     <div className="w-3/4  flex  flex-start">
-    //       <li
-    //         onClick={() => {
-    //           if (!editing)
-    //             navigate(`/allTask/${data._id}`, { state: { ...data } });
-    //         }}
-    //         key={data._id}
-    //         className="flex justify-between items-center p-2 bg-gray-100 rounded-lg">
-    //         {editing ? (
-    //           <input
-    //             type="text"
-    //             value={alldata.newName}
-    //             onChange={(e) =>
-    //               setAlldata((prev) => ({ ...prev, newName: e.target.value }))
-    //             }
-    //             className="border p-1"
-    //           />
-    //         ) : (
-    //           <span>{data.title.name}</span>
-    //         )}
-    //       </li>
-    //     </div>
-    //     <div className="flex gap-3">
-    //       <button
-    //         onClick={() => {
-    //           if (editing) {
-    //             handleSave();
-    //             // console.log(data);
-    //           } else {
-    //             setEditing(true);
-    //           }
-    //         }}
-    //         className="text-yellow-500 hover:text-yellow-600">
-    //         {editing ? <FaRegSave /> : <FaEdit />}
-    //       </button>
-    //       <button
-    //         className="text-red-500 hover:text-red-700"
-    //         onClick={()=>deleteTodo(alldata.taskListId)}>
-    //         <FaTrash />
-    //       </button>
-    //     </div>
-
-    //     {/* onClick={() => deleteTodo(todo.id)} */}
-    //   </ul>
-    // </div>
-
-    // <div className="bg-white w-[25rem] rounded-lg shadow-md p-4 flex justify-between items-center mb-2">
-    //   {/* Note Title (Editable) */}
-
-    //   <div
-    //     className="w-3/4 cursor-pointer"
-    //     onClick={() => {
-    //       if (!editing)
-    //         navigate(`/allTask/${data._id}`, { state: { ...data } });
-    //     }}>
-    //     <p className="text-xs text-gray-400 italic">
-    //       {formatDate(data.createdAt)}
-    //     </p>
-    //     {editing ? (
-    //       <input
-    //         type="text"
-    //         value={alldata.newName}
-    //         onChange={(e) =>
-    //           setAlldata((prev) => ({ ...prev, newName: e.target.value }))
-    //         }
-    //         className="border p-1 rounded w-full"
-    //       />
-    //     ) : (
-    //       <h3 className="text-lg font-semibold text-gray-900">
-    //         {data.title.name}
-    //       </h3>
-    //     )}
-    //   </div>
-
-    //   {/* Action Buttons */}
-    //   <div className="flex gap-3">
-    //     {/* Edit / Save Button */}
-    //     <button
-    //       onClick={() => {
-    //         if (editing) handleSave();
-    //         else setEditing(true);
-    //       }}
-    //       className="text-yellow-500 hover:text-yellow-600">
-    //       {editing ? <FaRegSave /> : <FaEdit />}
-    //     </button>
-
-    //     {/* Delete Button */}
-    //     <button
-    //       className="text-red-500 hover:text-red-700"
-    //       onClick={() => deleteTodo(alldata.taskListId)}>
-    //       <FaTrash />
-    //     </button>
-    //   </div>
-    // </div>
     <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-4 flex justify-between items-start gap-4 transition-transform transform hover:scale-[1.02] hover:shadow-xl duration-200">
       {/* Note Content */}
       <div

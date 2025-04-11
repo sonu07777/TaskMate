@@ -7,13 +7,15 @@ const initialState = {
   allTask:
     // localStorage.getItem("allTask") !== undefined
     //   ? JSON.parse(localStorage.getItem("allTask"))
-    //   : {}, 
+    //   : {},
     JSON.parse(localStorage.getItem("allTask")) || [],
 };
 
 export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
   try {
-    const res = axiosInstance.get("/api/v1/todo/getAllTodo",{withCredentials: true});
+    const res = axiosInstance.get("/api/v1/todo/getAllTodo", {
+      withCredentials: true,
+    });
     console.log(res);
 
     toast.promise(res, {
@@ -30,9 +32,11 @@ export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
 });
 export const addingTodo = createAsyncThunk("/addTodo", async (data) => {
   try {
-    console.log(data);
+    // console.log(data);
 
-    const res = axiosInstance.post("/api/v1/todo/addTodo", data);
+    const res = axiosInstance.post("/api/v1/todo/addTodo", data, {
+      withCredentials: true,
+    });
     // console.log(res);
     toast.promise(res, {
       loading: "Loading...",
@@ -48,13 +52,15 @@ export const addingTodo = createAsyncThunk("/addTodo", async (data) => {
 });
 export const fetchTask = createAsyncThunk("/fetchTodo", async (data) => {
   try {
-    const res = axiosInstance.get(`/api/v1/todo/fetchTask/${data}`);
+    const res = axiosInstance.get(`/api/v1/todo/fetchTask/${data}`, {
+      withCredentials: true,
+    });
     toast.promise(res, {
       loading: "Loading",
       success: (data) => {
         return data?.data?.message;
       },
-      error: "failed to get all course",
+      error: "failed to get all Task",
     });
     return (await res).data;
   } catch (error) {
@@ -70,7 +76,10 @@ export const addingTask = createAsyncThunk(
 
       const res = axiosInstance.post(
         `/api/v1/todo/addTask/${taskListId}`,
-        newTask
+        newTask,
+        {
+          withCredentials: true,
+        }
       );
       // console.log(data[0]+ "   " + {...data[1]});
 
@@ -95,7 +104,10 @@ export const editingTask = createAsyncThunk(
     try {
       const response = axiosInstance.put(
         `/api/v1/todo/editTask/${taskListId}`,
-        newTask
+        newTask,
+        {
+          withCredentials: true,
+        }
       );
       // console.log(newTask);
       // console.log(response);
@@ -115,7 +127,9 @@ export const editingTask = createAsyncThunk(
 );
 export const editingTodo = createAsyncThunk("/editingTodo", async (data) => {
   try {
-    const response = axiosInstance.post(`/api/v1/todo/editTodo`, data);
+    const response = axiosInstance.post(`/api/v1/todo/editTodo`, data, {
+      withCredentials: true,
+    });
     // console.log(newTask);
     console.log(response);
     toast.promise(response, {
@@ -137,7 +151,10 @@ export const todoDelete = createAsyncThunk(
     try {
       console.log(taskListId);
       const response = axiosInstance.delete(
-        `/api/v1/todo/deleteTodo/${taskListId}`
+        `/api/v1/todo/deleteTodo/${taskListId}`,
+        {
+          withCredentials: true,
+        }
       );
       console.log(response);
       toast.promise(response, {
@@ -158,9 +175,12 @@ export const taskDelete = createAsyncThunk(
   "/deleteTask",
   async ([taskListId, taskId]) => {
     try {
-      console.log(taskListId, taskId);
+      // console.log(taskListId, taskId);
       const response = axiosInstance.delete(
-        `/api/v1/todo/deleteTask/${taskListId}/${taskId}`
+        `/api/v1/todo/deleteTask/${taskListId}/${taskId}`,
+        {
+          withCredentials: true,
+        }
       );
       console.log(response);
       toast.promise(response, {
@@ -185,11 +205,14 @@ export const isFinished = createAsyncThunk(
       console.log(taskListId, taskId);
       const response = axiosInstance.put(
         `/api/v1/todo/updateTaskStatus/${taskListId}/${taskId}`,
-        { finished }
+        { finished },
+        {
+          withCredentials: true,
+        }
       );
       console.log(response);
       toast.promise(response, {
-        loading:"Task is Changing...",
+        loading: "Task is Changing...",
         success: (data) => {
           return data?.data?.message;
         },
@@ -209,11 +232,14 @@ export const selectAllTask = createAsyncThunk(
     try {
       console.log(taskListId);
       const response = axiosInstance.patch(
-        `/api/v1/todo/selectAll_Task/${taskListId}`
+        `/api/v1/todo/selectAll_Task/${taskListId}`,
+        {
+          withCredentials: true,
+        }
       );
       console.log(response);
       toast.promise(response, {
-        loading:"selecting all task..",
+        loading: "selecting all task..",
         success: (data) => {
           return data?.data?.message;
         },
@@ -233,11 +259,14 @@ export const unselectAllTask = createAsyncThunk(
     try {
       console.log(taskListId);
       const response = axiosInstance.patch(
-        `/api/v1/todo/unselectAll_Task/${taskListId}`
+        `/api/v1/todo/unselectAll_Task/${taskListId}`,
+        {
+          withCredentials: true,
+        }
       );
       console.log(response);
       toast.promise(response, {
-        loading:"unCheck all...",
+        loading: "unCheck all...",
         success: (data) => {
           return data?.data?.message;
         },

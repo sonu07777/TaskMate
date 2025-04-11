@@ -29,7 +29,8 @@ export default function TodoPage() {
     if (res?.payload?.success) {
       navigate("/todoPage");
     }
-    window.location.reload();
+    // window.location.reload();
+    await loadAllTodo();
     setNewTodo({ name: "" });
   }
   function handleUserInput(e) {
@@ -39,18 +40,6 @@ export default function TodoPage() {
       [name]: value,
     });
   }
-  // const handleUserInput = useDebounce((name, value) => {
-  //   setNewTodo({
-  //     ...newTodo,
-  //     [name]: value,
-  //   });
-  // },300);
-  // const handleUserInput = useCallback((e) => {
-  //   setNewTodo((prev) => ({
-  //     ...prev,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // }, []);
   async function updateTodo(updateTodo) {
     const response = await dispatch(editingTodo(updateTodo));
     // console.log(response?.payload?.success);

@@ -1,12 +1,6 @@
 import Task from "../Schema/Todo.schema.js";
 // import user from "../Schema/User.schema.js";
 
-// const cookieOption = {
-//   maxAge: 7 * 24 * 60 * 60 * 1000, // for 7days login
-//   httpOnly: true,
-//   secure: process.env.NODE_ENV === "production" ? true : false,
-//   sameSite: "Lax"
-// };
 
 const addTodo = async (req, res, next) => {
   try {
@@ -19,8 +13,6 @@ const addTodo = async (req, res, next) => {
     });
 
     await newTaskList.save();
-    const token = await newTaskList.generateTaskJWTToken();
-    // res.cookie("taskToken", token, cookieOption);
     res.status(201).json({
       success: true,
       message: "Task list created successfully",
@@ -29,7 +21,7 @@ const addTodo = async (req, res, next) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error creating task list", error: error.message });
+      .json({success:false, message: "Error creating task list", error: error.message });
   }
 };
 const addTasks = async (req, res, next) => {
@@ -104,8 +96,7 @@ const fetchTask = async (req, res, next) => {
         .status(404)
         .json({ success: false, message: "No tasks found for this title ID" });
     }
-    // const token = await taskList.generateTaskJWTToken();
-    // res.cookie("taskToken", token, cookieOption);
+    
     return res.status(200).json({
       success: true,
       message: "Tasks fetched successfully",
