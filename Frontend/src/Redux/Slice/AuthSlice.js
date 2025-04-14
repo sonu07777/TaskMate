@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../AxiosInstance/authAxio.js";
 
 const initialState = {
-  isLoggedIn: localStorage.getItem("isLoggedIn") || false,
+  isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
   role: localStorage.getItem("role") || "",
   // data:
   //   localStorage.getItem("data") !== undefined
@@ -215,12 +215,32 @@ const authSlice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         console.log(state);
-        localStorage.setItem("data", JSON.stringify(action?.payload?.User));
-        localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("role", action?.payload?.User?.role);
-        state.isLoggedIn = true;
-        state.data = action?.payload?.User;
-        state.role = action?.payload?.User?.role;
+        const user = action?.payload?.User;
+        if (user) {
+          localStorage.setItem("data", JSON.stringify(user));
+          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("role", user.role);
+          state.data = user;
+          state.isLoggedIn = true;
+          state.role = user.role;
+        } else {
+          // Clear invalid login artifacts if any
+          localStorage.removeItem("data");
+          localStorage.setItem("isLoggedIn", false);
+          localStorage.removeItem("role");
+          state.data = {};
+          state.isLoggedIn = false;
+          state.role = "";
+        }
+      })
+      .addCase(login.rejected, (state) => {
+        localStorage.removeItem("data");
+        localStorage.setItem("isLoggedIn", false);
+        localStorage.removeItem("role");
+
+        state.data = {};
+        state.isLoggedIn = false;
+        state.role = "";
       })
       .addCase(logout.fulfilled, (state) => {
         // console.log(state);
