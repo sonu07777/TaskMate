@@ -12,7 +12,7 @@ const initialState = {
   // data: localStorage.getItem("data")
   //   ? JSON.parse(localStorage.getItem("data"))
   //   : {},
-  data:data: JSON.parse(localStorage.getItem("data") || "{}"),
+  data: JSON.parse(localStorage.getItem("data") || "{}"),
 };
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
   try {
@@ -223,14 +223,11 @@ const authSlice = createSlice({
         state.role = action?.payload?.User?.role;
       })
       .addCase(logout.fulfilled, (state) => {
-        console.log(state);
+        // console.log(state);
         localStorage.clear();
         state.data = {};
         state.isLoggedIn = false;
         state.role = "";
-        state.allTodo = [],
-        state.allTask = []
-
       })
       .addCase(getUserData.fulfilled, (state, action) => {
         console.log(state);
