@@ -9,9 +9,10 @@ const initialState = {
   //   localStorage.getItem("data") !== undefined
   //     ? JSON.parse(localStorage.getItem("data"))
   //     : {},
-  data: localStorage.getItem("data")
-    ? JSON.parse(localStorage.getItem("data"))
-    : {},
+  // data: localStorage.getItem("data")
+  //   ? JSON.parse(localStorage.getItem("data"))
+  //   : {},
+  data:data: JSON.parse(localStorage.getItem("data") || "{}"),
 };
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
   try {
