@@ -3,12 +3,14 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../AxiosInstance/authAxio.js";
 
 const initialState = {
-  allTodo: JSON.parse(localStorage.getItem("allTodo")) || [],
-  allTask:
-    // localStorage.getItem("allTask") !== undefined
-    //   ? JSON.parse(localStorage.getItem("allTask"))
-    //   : {},
-    JSON.parse(localStorage.getItem("allTask")) || [],
+  // allTodo: JSON.parse(localStorage.getItem("allTodo")) || [],
+  // allTask:
+  //   // localStorage.getItem("allTask") !== undefined
+  //   //   ? JSON.parse(localStorage.getItem("allTask"))
+  //   //   : {},
+  //   JSON.parse(localStorage.getItem("allTask")) || [],
+  allTodo: JSON.parse(localStorage.getItem("allTodo") || "[]"),
+  allTask: JSON.parse(localStorage.getItem("allTask") || "[]"),
 };
 
 export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
@@ -294,23 +296,38 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodo.fulfilled, (state, action) => {
-        console.log(action.payload);
-        localStorage.setItem(
-          "allTodo",
-          JSON.stringify(action?.payload?.data)
-        );
-        if (action.payload) {
-          state.allTodo = [...action.payload.data];
+        // console.log(action.payload);
+        // localStorage.setItem("allTodo", JSON.stringify(action?.payload?.data));
+        // if (action.payload) {
+        //   state.allTodo = [...action.payload.data];
+        // }
+        const todos = action?.payload?.data;
+
+        if (todos) {
+          localStorage.setItem("allTodo", JSON.stringify(todos));
+          state.allTodo = [...todos];
+        } else {
+          localStorage.removeItem("allTodo");
+          state.allTodo = [];
         }
       })
       .addCase(fetchTask.fulfilled, (state, action) => {
-        console.log(action.payload);
-        localStorage.setItem(
-          "allTask",
-          JSON.stringify(action?.payload?.data?.title?.tasks)
-        );
-        if (action.payload) {
-          state.allTask = action.payload?.data?.title?.tasks;
+        // console.log(action.payload);
+        // localStorage.setItem(
+        //   "allTask",
+        //   JSON.stringify(action?.payload?.data?.title?.tasks)
+        // );
+        // if (action.payload) {
+        //   state.allTask = action.payload?.data?.title?.tasks;
+        // }
+        const tasks = action?.payload?.data?.title?.tasks;
+
+        if (tasks) {
+          localStorage.setItem("allTask", JSON.stringify(tasks));
+          state.allTask = tasks;
+        } else {
+          localStorage.removeItem("allTask");
+          state.allTask = [];
         }
       });
   },
