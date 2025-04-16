@@ -1,12 +1,21 @@
 import Task from "../Schema/Todo.schema.js";
 // import user from "../Schema/User.schema.js";
 
-
 const addTodo = async (req, res, next) => {
   try {
     const { name } = req.body;
     let existingTaskList = await Task.findOne({ user: req.user.id });
+    const existingTodo = await Task.findOne({
+      user: req.user.id,
+      "title.name": name,
+    });
 
+    if (existingTodo) {
+      return res.status(400).json({
+        success: false,
+        message: "A task list with this name already exists.",
+      });
+    }
     const newTaskList = await Task.create({
       user: req.user.id,
       title: { name },
@@ -21,7 +30,11 @@ const addTodo = async (req, res, next) => {
   } catch (error) {
     res
       .status(500)
-      .json({success:false, message: "Error creating task list", error: error.message });
+      .json({
+        success: false,
+        message: "Error creating task list",
+        error: error.message,
+      });
   }
 };
 const addTasks = async (req, res, next) => {
@@ -72,7 +85,7 @@ const fetchTodo = async (req, res, next) => {
         message: "No task list found for the user.",
       });
     }
-    
+
     if (Array.isArray(taskLists) && taskLists.length === 0) {
       return res.status(200).json({
         success: true,
@@ -87,12 +100,20 @@ const fetchTodo = async (req, res, next) => {
     // res.cookie("taskToken", token, cookieOption);
     return res
       .status(200)
-      .json({success:true, message: "Titles fetched successfully", data: taskLists });
+      .json({
+        success: true,
+        message: "Titles fetched successfully",
+        data: taskLists,
+      });
   } catch (error) {
     console.error("Error fetching titles:", error.message);
     res
       .status(500)
-      .json({success:false, message: "Error fetching titles", error: error.message });
+      .json({
+        success: false,
+        message: "Error fetching titles",
+        error: error.message,
+      });
   }
 };
 const fetchTask = async (req, res, next) => {
@@ -110,7 +131,7 @@ const fetchTask = async (req, res, next) => {
         .status(404)
         .json({ success: false, message: "No tasks found for this title ID" });
     }
-    
+
     return res.status(200).json({
       success: true,
       message: "Tasks fetched successfully",
@@ -371,21 +392,17 @@ const selectAllTasks = async (req, res) => {
     }));
 
     await taskList.save();
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "All tasks marked as finished",
-        taskList,
-      });
+    res.status(200).json({
+      success: true,
+      message: "All tasks marked as finished",
+      taskList,
+    });
   } catch (error) {
     console.error("Error selecting all tasks:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Server error while selecting all tasks",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Server error while selecting all tasks",
+    });
   }
 };
 const unselectAllTask = async (req, res) => {
@@ -406,21 +423,17 @@ const unselectAllTask = async (req, res) => {
     }));
 
     await taskList.save();
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "All tasks marked as finished",
-        taskList,
-      });
+    res.status(200).json({
+      success: true,
+      message: "All tasks marked as finished",
+      taskList,
+    });
   } catch (error) {
     console.error("Error selecting all tasks:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Server error while selecting all tasks",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Server error while selecting all tasks",
+    });
   }
 };
 

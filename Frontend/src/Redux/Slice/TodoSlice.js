@@ -22,9 +22,7 @@ export const fetchTodo = createAsyncThunk("/fetchAllTodo", async () => {
 
     toast.promise(res, {
       loading: "Loading..",
-      success: (data) => {
-        return data?.data?.message;
-      },
+     
       error: "failed to load todo...",
     });
     return (await res).data;
@@ -59,9 +57,7 @@ export const fetchTask = createAsyncThunk("/fetchTodo", async (data) => {
     });
     toast.promise(res, {
       loading: "Loading",
-      success: (data) => {
-        return data?.data?.message;
-      },
+
       error: "failed to get all Task",
     });
     return (await res).data;
