@@ -64,7 +64,7 @@ const AllUsers = () => {
                 {users.map((user, i) => (
                   <tr key={user._id} className="hover:bg-gray-50">
                     <td className="p-3 border">{i + 1}</td>
-                    <td className="p-3 border">{user.name}</td>
+                    <td className="p-3 border">{user.fullName}</td>
                     <td className="p-3 border">{user.email}</td>
                     <td className="p-3 border font-medium">{user.role}</td>
                     <td className="p-3 border">
