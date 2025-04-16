@@ -47,7 +47,7 @@ const LandingPage = ({ children }) => {
             <Link to="/contactUs" className="hover:text-indigo-600 transition">
               Contact Us
             </Link>
-            {isLoggedIn && role === "ADMIN" && (
+            {isLoggedIn && (role === "ADMIN" || role === "admin") && (
               <Link
                 to="/adminDashboard"
                 className="hover:text-indigo-600 transition">
