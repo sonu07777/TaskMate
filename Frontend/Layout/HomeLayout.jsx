@@ -121,7 +121,7 @@ const LandingPage = ({ children }) => {
               className="block hover:text-indigo-600">
               Contact Us
             </Link>
-            {isLoggedIn && role === "ADMIN" && (
+            {isLoggedIn && (role === "ADMIN" || role === "admin") && (
               <Link
                 to="/adminDashboard"
                 onClick={() => setMenuOpen(false)}

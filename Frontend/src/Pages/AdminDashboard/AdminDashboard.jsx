@@ -38,7 +38,7 @@ const AllUsers = () => {
 
   return (
     <LandingPage>
-      <div className="p-6">
+      {/* <div className="p-6">
         <h2 className="text-2xl font-semibold mb-6">
           🛠️ Admin Dashboard – Manage Users
         </h2>
@@ -75,6 +75,56 @@ const AllUsers = () => {
                           handleRoleChange(user._id, e.target.value)
                         }
                         className="border px-2 py-1 rounded focus:outline-none">
+                        <option value="user">user</option>
+                        <option value="admin">admin</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div> */}
+      <div className="p-6 max-w-full mx-auto">
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          🛠️ Admin Dashboard – Manage Users
+        </h2>
+
+        {loading && <p>Loading users...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+
+        {users.length === 0 ? (
+          <p className="text-center">No users found.</p>
+        ) : (
+          <div className="overflow-x-auto shadow-lg rounded-lg bg-white p-4">
+            <table className="min-w-full table-auto bg-white border border-gray-200 text-sm">
+              <thead className="bg-gray-100 text-left">
+                <tr>
+                  <th className="p-3 border">#</th>
+                  <th className="p-3 border">Name</th>
+                  <th className="p-3 border">Email</th>
+                  <th className="p-3 border">Role</th>
+                  <th className="p-3 border">Change Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user, i) => (
+                  <tr
+                    key={user._id}
+                    className="hover:bg-gray-50 transition-colors">
+                    <td className="p-3 border">{i + 1}</td>
+                    <td className="p-3 border">{user.fullName}</td>
+                    <td className="p-3 border">{user.email}</td>
+                    <td className="p-3 border font-medium">{user.role}</td>
+                    <td className="p-3 border">
+                      <select
+                        value={user.role}
+                        disabled={updatingUserId === user._id}
+                        onChange={(e) =>
+                          handleRoleChange(user._id, e.target.value)
+                        }
+                        className="border px-2 py-1 rounded focus:outline-none w-full md:w-auto">
                         <option value="user">user</option>
                         <option value="admin">admin</option>
                       </select>
