@@ -11,7 +11,6 @@ const contactUs = async (req, res, next) => {
   if (!name || !email || !message) {
     return next(new AppError("Name, Email, Message are required"));
   }
-
   try {
     const subject = "Contact Us Form";
     const textMessage = `${name} - ${email} <br /> ${message}`;
@@ -28,7 +27,6 @@ const contactUs = async (req, res, next) => {
     message: "Your request has been submitted successfully",
   });
 };
-
 const userStats = async (req, res, next) => {
   try {
     const allUsersCount = await User.countDocuments();

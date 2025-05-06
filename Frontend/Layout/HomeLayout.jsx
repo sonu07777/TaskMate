@@ -125,7 +125,7 @@ const LandingPage = ({ children }) => {
               className="block hover:text-indigo-600">
               Home
             </Link>
-            <Link to="/courses" className="hover:text-indigo-600 transition">
+            <Link to="/courses" className="block hover:text-indigo-600">
               All Courses
             </Link>
             <Link
