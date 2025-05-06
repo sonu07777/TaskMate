@@ -14,4 +14,30 @@ const isLogged_in = async (req, res, next) => {
   next();
 };
 
-export { isLogged_in };
+const authorizedRoles =
+  (...roles) =>
+  async (req, res, next) => {
+    //roles return the value in Array form
+    const currentUserRoles = req.user.role;
+    if (!roles.includes(currentUserRoles)) {
+      return next(
+        new AppError("you don't have permission to access this ", 400)
+      );
+    }
+
+    next();
+  };
+const authorizedSubscriber = async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  if (
+    user.subscription.status != "active" &&
+    user.role != "admin" &&
+    user.role != "ADMIN"
+  ) {
+    return next(new AppError("you not parches the course", 400));
+  }
+  next();
+};
+
+export { isLogged_in, authorizedRoles, authorizedSubscriber};

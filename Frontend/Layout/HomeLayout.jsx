@@ -44,6 +44,9 @@ const LandingPage = ({ children }) => {
             <Link to="/" className="hover:text-indigo-600 transition">
               Home
             </Link>
+            <Link to="/courses" className="hover:text-indigo-600 transition">
+              All Courses
+            </Link>
             <Link to="/contactUs" className="hover:text-indigo-600 transition">
               Contact Us
             </Link>
@@ -52,6 +55,13 @@ const LandingPage = ({ children }) => {
                 to="/adminDashboard"
                 className="hover:text-indigo-600 transition">
                 Admin Dashboard
+              </Link>
+            )}
+            {isLoggedIn && (role === "ADMIN" || role === "admin") && (
+              <Link
+                to="/course/create"
+                className="hover:text-indigo-600 transition">
+                Create new course
               </Link>
             )}
             <Link to="/aboutUs" className="hover:text-indigo-600 transition">
@@ -115,6 +125,9 @@ const LandingPage = ({ children }) => {
               className="block hover:text-indigo-600">
               Home
             </Link>
+            <Link to="/courses" className="hover:text-indigo-600 transition">
+              All Courses
+            </Link>
             <Link
               to="/contactUs"
               onClick={() => setMenuOpen(false)}
@@ -127,6 +140,13 @@ const LandingPage = ({ children }) => {
                 onClick={() => setMenuOpen(false)}
                 className="block hover:text-indigo-600">
                 Admin Dashboard
+              </Link>
+            )}
+            {isLoggedIn && (role === "ADMIN" || role === "admin") && (
+              <Link
+                to="/course/create"
+                className="block hover:text-indigo-600">
+                Create new course
               </Link>
             )}
             <Link

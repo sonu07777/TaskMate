@@ -3,9 +3,11 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import HomeLayout from "../../../Layout/HomeLayout.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteAccount } from "../../Redux/Slice/AuthSlice.js";
+import { deleteAccount, getUserData } from "../../Redux/Slice/AuthSlice.js";
 import { FaUser, FaShieldAlt } from "react-icons/fa";
 import Footer from "../Footer.jsx";
+import { cancelCourseBundle } from "../../Redux/Slice/PaymentSlice.js";
+import toast from "react-hot-toast";
 
 // import toast from "react-hot-toast";
 
@@ -15,6 +17,13 @@ const ProfilePage = () => {
   const userData = useSelector((state) => state?.auth?.data);
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
   const role = useSelector((state) => state?.auth?.role);
+  const handleCancellation = async () => {
+    toast("Initiating cancellation");
+    await dispatch(cancelCourseBundle());
+    await dispatch(getUserData());
+    toast.success("Cancellation completed!");
+    navigate("/");
+  };
   async function onDelete(e) {
     e.preventDefault();
 
@@ -106,13 +115,19 @@ const ProfilePage = () => {
               className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition shadow-sm">
               Edit Profile
             </Link>
+            {userData?.subscription?.status === "active" && (
+              <button
+                onClick={handleCancellation}
+                className="w-full bg-red-600 hover:bg-red-500 transition-all ease-in-out duration-300 rounded-sm font-semibold py-2 cursor-pointer text-center">
+                Cancel Subscription
+              </button>
+            )}
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </HomeLayout>
   );
 };
 
 export default ProfilePage;
-
